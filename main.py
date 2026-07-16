@@ -240,7 +240,12 @@ class Library:
 list_of_books = []
 list_of_readers = []
 library = Library(list_of_books, list_of_readers)
-library.load_from_json("library.json")
+try:
+    library.load_from_json("library.json")
+except FileNotFoundError:
+    print("Library file not found")
+    
+
 
 
 print("____________________________________\n.                                  .\n.                                  .\n.                                  .\n.   ░█░░░▀█▀░█▀▄░█▀▄░█▀█░█▀▄░█░█   .\n.   ░█░░░░█░░█▀▄░█▀▄░█▀█░█▀▄░░█░   .\n.   ░▀▀▀░▀▀▀░▀▀░░▀░▀░▀░▀░▀░▀░░▀░   .\n.                                  .\n.                                  .\n.                                  .\n____________________________________")
