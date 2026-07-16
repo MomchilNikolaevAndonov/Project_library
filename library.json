@@ -1,0 +1,63 @@
+{
+    "books": [
+        {
+            "type": "book",
+            "id": 1,
+            "title": "Harry Potter and the Philosopher's Stone",
+            "author": "J.K. Rowling",
+            "release_date": "1997",
+            "available": true,
+            "ISBN": "9780747532699",
+            "pages": 223
+        },
+        {
+            "type": "book",
+            "id": 2,
+            "title": "1984",
+            "author": "George Orwell",
+            "release_date": "1949",
+            "available": false,
+            "ISBN": "9780451524935",
+            "pages": 328
+        },
+        {
+            "type": "book",
+            "id": 3,
+            "title": "The Hobbit",
+            "author": "J.R.R. Tolkien",
+            "release_date": "1937",
+            "available": true,
+            "ISBN": "9780547928227",
+            "pages": 310
+        },
+        {
+            "type": "book",
+            "id": 4,
+            "title": "The Great Gatsby",
+            "author": "F. Scott Fitzgerald",
+            "release_date": "1925",
+            "available": true,
+            "ISBN": "9780743273565",
+            "pages": 180
+        }
+    ],
+    "readers": [
+        {
+            "id": 1,
+            "name": "Ivan",
+            "books": [
+                2
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Josh",
+            "books": []
+        },
+        {
+            "id": 3,
+            "name": "Minko",
+            "books": []
+        }
+    ]
+}
