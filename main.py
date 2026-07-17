@@ -1,4 +1,6 @@
 import json
+from pickle import FALSE
+
 
 class LibraryItem:
     def __init__(self, id, title, author, release_date, available):
@@ -84,12 +86,60 @@ class Library:
         self.readers = readers
 
     def add_book(self, id, title, author, release_date, available, ISBN, pages):
+        for book in self.books:
+            if book.id == id:
+                print("Id already exists")
+                return False
+
+        if title == "":
+            print("You should enter title")
+            return False
+
+        if author == "":
+            print("You didnt enter a author")
+            return False
+
+        if not 0 <= int(release_date) <= 2026:
+            print("Enter a valid year")
+            return False
+
+        if ISBN == "":
+            return False
+
+        if pages < 1:
+            return False
+
         self.books.append(Book(id, title, author, release_date, available, ISBN, pages))
         print ("the book was successfully added")
+        return True
 
     def add_ebook(self, id, title, author, release_date, available, format, size):
+        for book in self.books:
+            if book.id == id:
+                print("Id already exists")
+                return False
+
+        if title == "":
+            print("You should enter title")
+            return False
+
+        if author == "":
+            print("You didnt enter a author")
+            return False
+
+        if not 0 <= int(release_date) <= 2026:
+            print("Enter a valid year")
+            return False
+
+        if format == "":
+            return False
+
+        if size < 1:
+            return False
+
         self.books.append(Ebook(id, title, author, release_date, available, format, size))
         print("the ebook was successfully added")
+        return True
 
     def show_inventory(self):
         print("books:")
@@ -108,8 +158,14 @@ class Library:
         print("The books were sorted by release date")
 
     def add_reader(self, id, name):
+        for reader in self.readers:
+            if reader.id == id:
+                print("Id already exists")
+                return False
         self.readers.append(Reader(int(id), name))
         print("the reader was successfully added")
+        return True
+
 
     def reader_info(self):
         for reader in self.readers:
@@ -130,7 +186,7 @@ class Library:
             book.take_book()
 
     def return_book(self, reader_id, book_title):
-        reader = self.find_reader_by_ID(reader_id)[0]
+        reader = self.find_reader_by_ID(int(reader_id))[0]
         book = self.find_by_title(book_title)[0]
         if reader.return_book(book):
             book.return_book()
@@ -272,14 +328,21 @@ while user_input !=0:
               """)
         user_input = input("Enter your choice: ")
         if user_input == "1":
-            book = input("Enter book's details(id,title,author,release_date,ISBN,pages): ").split(',')
-            library.add_book(int(book[0]), book[1], book[2], book[3], True, book[4],int(book[5]))
+            book = input("Enter book's details(id,title,author,release_date(yyyy),ISBN,pages): ").split(',')
+            successful = True
+            while not successful:
+                successful = library.add_book(int(book[0]), book[1], book[2], book[3], True, book[4], int(book[5]))
+
         elif user_input == "2":
-            ebook = input("Enter ebook's details(id,title,author,release_date,format,size): ").split(',')
-            library.add_ebook(int(ebook[0]), ebook[1], ebook[2], ebook[3], True, ebook[4], ebook[5])
+            ebook = input("Enter ebook's details(id,title,author,release_date(yyyy),format,size): ").split(',')
+            successful = True
+            while not successful:
+                successful = library.add_ebook(int(ebook[0]), ebook[1], ebook[2], ebook[3], True, ebook[4], ebook[5])
         elif user_input == "3":
             reader = input("Enter reader's details(id,name): ").split(',')
-            library.add_reader(int(reader[0]), reader[1])
+            successful = True
+            while not successful:
+                successful = library.add_reader(int(reader[0]), reader[1])
         else: print("No such command")
 
     elif user_input == "2":
@@ -287,6 +350,7 @@ while user_input !=0:
         1.inventory
         2.reader
         3.books
+        4.taken
         """)
         user_input = input("Enter your choice: ")
         if user_input == "1":
@@ -295,16 +359,21 @@ while user_input !=0:
             library.reader_info()
         elif user_input == "3":
             library.book_info()
+        elif user_input == "4":
+            library.show_taken()
+        else: print("No such command")
 
     elif user_input == "3":
         library.sort_by_title()
 
     elif user_input == "4":
+        library.show_inventory()
         reader_id = input("Enter reader's ID: ")
         title = input("Enter book's title: ")
         library.take_book(reader_id, title)
 
     elif user_input == "5":
+        library.show_taken()
         reader_id = input("Enter reader's ID: ")
         title = input("Enter book's title: ")
         library.return_book(reader_id, title)
@@ -314,6 +383,3 @@ while user_input !=0:
         print("No such command")
 
 library.save_to_json("library.json")
-
-
-
